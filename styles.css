@@ -1,4 +1,4 @@
-/* Reset */
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
@@ -9,74 +9,88 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
     color: #333;
+}
+
+.app {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
     padding: 20px;
+    overflow-y: auto;
 }
 
-.container {
-    width: 100%;
-    max-width: 1200px;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.sidebar h2 {
+    font-size: 1.5em;
     margin-bottom: 20px;
 }
 
-header h1 {
-    font-size: 2em;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
+.sidebar button {
+    background-color: #3498db;
     color: white;
     border: none;
+    padding: 10px;
     cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
 }
 
-button:hover {
-    background-color: #45a049;
+.sidebar button:hover {
+    background-color: #2980b9;
 }
 
-main {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.page {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 300px;
+.content {
+    flex: 1;
     padding: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    background-color: white;
+    overflow-y: auto;
 }
 
-.page:hover {
-    transform: scale(1.05);
+#pageTitle {
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
-.page h2 {
+#pageContent {
+    margin-top: 20px;
+}
+
+.block {
     margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
 }
 
-.page ul {
+.block input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+}
+
+ul {
     list-style: none;
-    padding-left: 20px;
+    margin: 10px 0;
 }
 
-.page ul li {
+li {
     margin: 5px 0;
 }
 
-.page .todo {
-    margin-top: 20px;
+button {
+    padding: 5px 10px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
 }
+
+button:hover {
+    background-color: #27ae60;
+}
+
