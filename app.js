@@ -129,3 +129,73 @@ addBlockToPageBtn.onclick = addBlock;
 
 // Initial Rendering
 renderPages();
+function renderPages() {
+  pagesList.innerHTML = ''; // Clear the list before rendering pages
+  Object.keys(pagesData).forEach((pageName) => {
+    const pageItem = document.createElement("li");
+    pageItem.textContent = pageName;
+
+    // Create the delete button for each page
+    const deletePageBtn = document.createElement("button");
+    deletePageBtn.textContent = "Delete";
+    deletePageBtn.classList.add("delete-btn");
+    deletePageBtn.onclick = () => deletePage(pageName);
+
+    pageItem.appendChild(deletePageBtn);  // Add the delete button to the page item
+    pageItem.onclick = () => loadPage(pageName);
+    pagesList.appendChild(pageItem);
+  });
+}
+
+// Function to delete a page
+function deletePage(pageName) {
+  if (confirm(`Are you sure you want to delete the page: ${pageName}?`)) {
+    delete pagesData[pageName];  // Remove the page from pagesData
+    localStorage.setItem("pagesData", JSON.stringify(pagesData));
+    renderPages();  // Re-render the pages list
+    pageContent.innerHTML = '';  // Clear the page content
+  }
+}
+function addBlockToPage(block) {
+  const blockElement = document.createElement("div");
+  blockElement.classList.add("block");
+
+  if (block.type === "text") {
+    const textBlock = document.createElement("p");
+    textBlock.textContent = block.content;
+    blockElement.appendChild(textBlock);
+  } else if (block.type === "checkbox") {
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = block.checked;
+
+    const label = document.createElement("label");
+    label.textContent = block.content;
+
+    blockElement.appendChild(checkbox); // Checkbox first
+    blockElement.appendChild(label);    // Label after checkbox
+  } else if (block.type === "heading") {
+    const heading = document.createElement("h3");
+    heading.textContent = block.content;
+    blockElement.appendChild(heading);
+  }
+
+  // Create delete button for each block
+  const deleteBlockBtn = document.createElement("button");
+  deleteBlockBtn.textContent = "Delete";
+  deleteBlockBtn.classList.add("delete-btn");
+  deleteBlockBtn.onclick = () => deleteBlock(block);
+
+  blockElement.appendChild(deleteBlockBtn);  // Add the delete button to the block
+  pageContent.appendChild(blockElement);
+}
+
+// Function to delete a block
+function deleteBlock(block) {
+  const blockIndex = pagesData[pageTitle.textContent].indexOf(block);
+  if (blockIndex !== -1) {
+    pagesData[pageTitle.textContent].splice(blockIndex, 1);  // Remove block from the page
+    localStorage.setItem("pagesData", JSON.stringify(pagesData));
+    loadPage(pageTitle.textContent);  // Reload the page to reflect changes
+  }
+}
