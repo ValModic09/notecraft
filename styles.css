@@ -157,3 +157,17 @@
   font-size: 14px; /* Adjust the font size for better readability */
   margin-left: 10px; /* Optional, adds a little space between checkbox and label */
 }
+.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
