@@ -1,84 +1,83 @@
-// Helper functions to load and save pages from localStorage
-function loadPages() {
-    const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    const pagesList = document.getElementById('pagesList');
-    pagesList.innerHTML = '';
-    
-    pages.forEach((page, index) => {
-        const pageElement = document.createElement('li');
-        pageElement.innerHTML = `<a href="#" onclick="loadPage(${index})">${page.title}</a>`;
-        pagesList.appendChild(pageElement);
-    });
+// Data Storage in localStorage
+let pagesData = JSON.parse(localStorage.getItem("pagesData")) || {};
+
+// Elements
+const pagesList = document.getElementById("pagesList");
+const pageTitle = document.getElementById("pageTitle");
+const pageContent = document.getElementById("pageContent");
+const newPageBtn = document.getElementById("newPageBtn");
+const addBlockBtn = document.getElementById("addBlockBtn");
+
+function renderPages() {
+  pagesList.innerHTML = '';
+  Object.keys(pagesData).forEach((pageName) => {
+    const pageItem = document.createElement("li");
+    pageItem.textContent = pageName;
+    pageItem.onclick = () => loadPage(pageName);
+    pagesList.appendChild(pageItem);
+  });
 }
 
-function savePages(pages) {
-    localStorage.setItem('pages', JSON.stringify(pages));
+function loadPage(pageName) {
+  pageTitle.textContent = pageName;
+  pageContent.innerHTML = '';
+  pagesData[pageName].forEach((block) => {
+    addBlockToPage(block);
+  });
 }
 
-// Load a specific page
-function loadPage(pageIndex) {
-    const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    const page = pages[pageIndex];
+function addBlockToPage(block) {
+  const blockElement = document.createElement("div");
+  blockElement.classList.add("block");
+  
+  if (block.type === "text") {
+    const textBlock = document.createElement("p");
+    textBlock.textContent = block.content;
+    blockElement.appendChild(textBlock);
+  } else if (block.type === "checkbox") {
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = block.checked;
+    blockElement.appendChild(checkbox);
+    const label = document.createElement("label");
+    label.textContent = block.content;
+    blockElement.appendChild(label);
+  } else if (block.type === "heading") {
+    const heading = document.createElement("h3");
+    heading.textContent = block.content;
+    blockElement.appendChild(heading);
+  }
 
-    // Set the page title and content
-    document.getElementById('pageTitle').textContent = page.title;
-    const pageContent = document.getElementById('pageContent');
-    pageContent.innerHTML = '';
-
-    page.blocks.forEach((block, index) => {
-        const blockElement = document.createElement('div');
-        blockElement.classList.add('block');
-        
-        if (block.type === 'text') {
-            blockElement.innerHTML = `<input type="text" value="${block.content}" onblur="saveBlock(${pageIndex}, ${index}, 'text', this.value)" />`;
-        } else if (block.type === 'checkbox') {
-            blockElement.innerHTML = `
-                <input type="checkbox" ${block.checked ? 'checked' : ''} 
-                onchange="saveBlock(${pageIndex}, ${index}, 'checkbox', this.checked)" /> 
-                ${block.content}
-            `;
-        }
-        
-        pageContent.appendChild(blockElement);
-    });
-
-    // Add a button to add a new block
-    const addBlockBtn = document.createElement('button');
-    addBlockBtn.textContent = 'Add Block';
-    addBlockBtn.onclick = () => addNewBlock(pageIndex);
-    pageContent.appendChild(addBlockBtn);
+  pageContent.appendChild(blockElement);
 }
 
-// Save a block (either text or checkbox)
-function saveBlock(pageIndex, blockIndex, type, value) {
-    const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    pages[pageIndex].blocks[blockIndex] = { type, content: value, checked: type === 'checkbox' ? value : undefined };
-    savePages(pages);
+function addNewPage() {
+  const pageName = prompt("Enter the page name:");
+  if (pageName && !pagesData[pageName]) {
+    pagesData[pageName] = [];
+    localStorage.setItem("pagesData", JSON.stringify(pagesData));
+    renderPages();
+    loadPage(pageName);
+  }
 }
 
-// Add a new block (text or checkbox)
-function addNewBlock(pageIndex) {
-    const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    const page = pages[pageIndex];
+function addNewBlock() {
+  const blockType = prompt("Enter block type (text, checkbox, heading):");
+  const content = prompt("Enter block content:");
 
-    const newBlock = { type: 'text', content: '' };
-    page.blocks.push(newBlock);
-    savePages(pages);
+  const newBlock = {
+    type: blockType,
+    content: content,
+    checked: blockType === "checkbox" ? false : undefined,
+  };
 
-    loadPage(pageIndex);
+  pagesData[pageTitle.textContent].push(newBlock);
+  localStorage.setItem("pagesData", JSON.stringify(pagesData));
+  addBlockToPage(newBlock);
 }
 
-// Create a new page
-function createNewPage() {
-    const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    const newPage = { title: `Page ${pages.length + 1}`, blocks: [] };
-    pages.push(newPage);
-    savePages(pages);
-    loadPages();
-}
+newPageBtn.onclick = addNewPage;
+addBlockBtn.onclick = addNewBlock;
 
-// Event listeners
-document.getElementById('newPageBtn').addEventListener('click', createNewPage);
-
-// Initial page load
-loadPages();
+// Initial Rendering
+renderPages();
