@@ -1,54 +1,80 @@
-// Initialize or load existing data from localStorage
+// Helper functions to load and save pages from localStorage
 function loadPages() {
     const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    const content = document.getElementById('content');
-    content.innerHTML = '';
+    const pagesList = document.getElementById('pagesList');
+    pagesList.innerHTML = '';
     
     pages.forEach((page, index) => {
-        const pageElement = document.createElement('div');
-        pageElement.classList.add('page');
-        pageElement.innerHTML = `
-            <h2>${page.title}</h2>
-            <ul>
-                ${page.tasks.map(task => `<li>${task}</li>`).join('')}
-            </ul>
-            <div class="todo">
-                <input type="text" class="new-task" placeholder="New task">
-                <button onclick="addTask(${index})">Add Task</button>
-            </div>
-        `;
-        content.appendChild(pageElement);
+        const pageElement = document.createElement('li');
+        pageElement.innerHTML = `<a href="#" onclick="loadPage(${index})">${page.title}</a>`;
+        pagesList.appendChild(pageElement);
     });
 }
 
-// Save pages to localStorage
 function savePages(pages) {
     localStorage.setItem('pages', JSON.stringify(pages));
+}
+
+// Load a specific page
+function loadPage(pageIndex) {
+    const pages = JSON.parse(localStorage.getItem('pages')) || [];
+    const page = pages[pageIndex];
+
+    // Set the page title and content
+    document.getElementById('pageTitle').textContent = page.title;
+    const pageContent = document.getElementById('pageContent');
+    pageContent.innerHTML = '';
+
+    page.blocks.forEach((block, index) => {
+        const blockElement = document.createElement('div');
+        blockElement.classList.add('block');
+        
+        if (block.type === 'text') {
+            blockElement.innerHTML = `<input type="text" value="${block.content}" onblur="saveBlock(${pageIndex}, ${index}, 'text', this.value)" />`;
+        } else if (block.type === 'checkbox') {
+            blockElement.innerHTML = `
+                <input type="checkbox" ${block.checked ? 'checked' : ''} 
+                onchange="saveBlock(${pageIndex}, ${index}, 'checkbox', this.checked)" /> 
+                ${block.content}
+            `;
+        }
+        
+        pageContent.appendChild(blockElement);
+    });
+
+    // Add a button to add a new block
+    const addBlockBtn = document.createElement('button');
+    addBlockBtn.textContent = 'Add Block';
+    addBlockBtn.onclick = () => addNewBlock(pageIndex);
+    pageContent.appendChild(addBlockBtn);
+}
+
+// Save a block (either text or checkbox)
+function saveBlock(pageIndex, blockIndex, type, value) {
+    const pages = JSON.parse(localStorage.getItem('pages')) || [];
+    pages[pageIndex].blocks[blockIndex] = { type, content: value, checked: type === 'checkbox' ? value : undefined };
+    savePages(pages);
+}
+
+// Add a new block (text or checkbox)
+function addNewBlock(pageIndex) {
+    const pages = JSON.parse(localStorage.getItem('pages')) || [];
+    const page = pages[pageIndex];
+
+    const newBlock = { type: 'text', content: '' };
+    page.blocks.push(newBlock);
+    savePages(pages);
+
+    loadPage(pageIndex);
 }
 
 // Create a new page
 function createNewPage() {
     const pages = JSON.parse(localStorage.getItem('pages')) || [];
-    const newPage = {
-        title: `Page ${pages.length + 1}`,
-        tasks: []
-    };
+    const newPage = { title: `Page ${pages.length + 1}`, blocks: [] };
     pages.push(newPage);
     savePages(pages);
     loadPages();
-}
-
-// Add a new task to a page
-function addTask(pageIndex) {
-    const taskInput = document.querySelectorAll('.new-task')[pageIndex];
-    const taskValue = taskInput.value.trim();
-
-    if (taskValue) {
-        const pages = JSON.parse(localStorage.getItem('pages')) || [];
-        pages[pageIndex].tasks.push(taskValue);
-        savePages(pages);
-        loadPages();
-    }
 }
 
 // Event listeners
