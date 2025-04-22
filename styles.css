@@ -140,3 +140,17 @@
    border: 1px solid #ccc;
    border-radius: 4px;
  }
+/* Style the block element to arrange checkbox to the left of the text */
+.block {
+  display: flex;
+  align-items: center; /* Vertically center the checkbox and text */
+  margin-bottom: 10px;
+}
+
+.block input[type="checkbox"] {
+  margin-right: 10px; /* Space between the checkbox and the text */
+}
+
+.block label {
+  font-size: 14px; /* Adjust the font size for better readability */
+}
