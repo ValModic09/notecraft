@@ -38,30 +38,33 @@
    });
  }
  
- function addBlockToPage(block) {
-   const blockElement = document.createElement("div");
-   blockElement.classList.add("block");
- 
-   if (block.type === "text") {
-     const textBlock = document.createElement("p");
-     textBlock.textContent = block.content;
-     blockElement.appendChild(textBlock);
-   } else if (block.type === "checkbox") {
-     const checkbox = document.createElement("input");
-     checkbox.type = "checkbox";
-     checkbox.checked = block.checked;
-     blockElement.appendChild(checkbox);
-     const label = document.createElement("label");
-     label.textContent = block.content;
-     blockElement.appendChild(label);
-   } else if (block.type === "heading") {
-     const heading = document.createElement("h3");
-     heading.textContent = block.content;
-     blockElement.appendChild(heading);
-   }
- 
-   pageContent.appendChild(blockElement);
- }
+function addBlockToPage(block) {
+  const blockElement = document.createElement("div");
+  blockElement.classList.add("block");
+  
+  if (block.type === "text") {
+    const textBlock = document.createElement("p");
+    textBlock.textContent = block.content;
+    blockElement.appendChild(textBlock);
+  } else if (block.type === "checkbox") {
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = block.checked;
+
+    const label = document.createElement("label");
+    label.textContent = block.content;
+
+    blockElement.appendChild(checkbox); // Checkbox will be added first
+    blockElement.appendChild(label);    // Label follows the checkbox
+  } else if (block.type === "heading") {
+    const heading = document.createElement("h3");
+    heading.textContent = block.content;
+    blockElement.appendChild(heading);
+  }
+
+  pageContent.appendChild(blockElement);
+}
+
  
  function addNewPage() {
    const pageName = prompt("Enter the page name:");
