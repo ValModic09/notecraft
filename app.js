@@ -67,8 +67,8 @@ function addBlockToPage(block) {
 
 // Function for adding new page (No changes here)
 function addNewPage() {
-  const pageName = prompt("Enter the page name:");
-  newPageModal.style.display = "block";
+  // Odprtje modala za dodajanje nove strani
+  newPageModal.style.display = "block";  
 }
 
 function closePageModal() {
