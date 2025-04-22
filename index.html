@@ -20,8 +20,32 @@
     </div>
   </div>
 
+  <!-- Modal for New Page -->
+  <div id="newPageModal" class="modal">
+    <div class="modal-content">
+      <h2>Create New Page</h2>
+      <input type="text" id="newPageName" placeholder="Enter page name">
+      <button id="createPageBtn">Create Page</button>
+      <button id="closePageModalBtn">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Modal for Adding Blocks -->
+  <div id="addBlockModal" class="modal">
+    <div class="modal-content">
+      <h2>Add a New Block</h2>
+      <select id="blockType">
+        <option value="text">Text</option>
+        <option value="checkbox">Checkbox</option>
+        <option value="heading">Heading</option>
+      </select>
+      <input type="text" id="blockContent" placeholder="Enter content">
+      <button id="addBlockToPageBtn">Add Block</button>
+      <button id="closeBlockModalBtn">Cancel</button>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>
-
 
