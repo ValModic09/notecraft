@@ -141,9 +141,11 @@
    border-radius: 4px;
  }
 /* Style the block element to arrange checkbox to the left of the text */
+/* Style the block element to arrange checkbox to the left of the text */
 .block {
   display: flex;
-  align-items: center; /* Vertically center the checkbox and text */
+  align-items: center;  /* Vertically center the checkbox and text */
+  justify-content: flex-start;  /* Ensure content is aligned to the left */
   margin-bottom: 10px;
 }
 
@@ -153,4 +155,5 @@
 
 .block label {
   font-size: 14px; /* Adjust the font size for better readability */
+  margin-left: 10px; /* Optional, adds a little space between checkbox and label */
 }
