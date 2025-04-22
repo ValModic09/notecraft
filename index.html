@@ -1,49 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NoteCraft</title>
-  <link href="styles.css" rel="stylesheet">
-</head>
-<body>
-
-  <div class="container">
-    <h1>NoteCraft</h1>
-    <div class="page-container">
-      <h2 id="pageTitle">Main Page</h2>
-      <button id="addBlockBtn">Add Block</button>
-      <div id="pageContent"></div>
-    </div>
-  </div>
-
-  <!-- Modal for Adding Blocks -->
-  <div id="addBlockModal" class="modal">
-    <div class="modal-content">
-      <h2>Add a New Block</h2>
-      <select id="blockType">
-        <option value="text">Text</option>
-        <option value="checkbox">Checkbox</option>
-        <option value="heading">Heading</option>
-      </select>
-      <input type="text" id="blockContent" placeholder="Enter content">
-      
-      <!-- Importance dropdown (only shown for checkbox blocks) -->
-      <div id="importanceContainer" style="display: none;">
-        <label for="importanceSelect">Importance:</label>
-        <select id="importanceSelect">
-          <option value="high">High</option>
-          <option value="medium">Medium</option>
-          <option value="low">Low</option>
-        </select>
-      </div>
-
-      <button id="addBlockToPageBtn">Add Block</button>
-      <button id="closeBlockModalBtn">Cancel</button>
-    </div>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-</html>
-
+ <html lang="en">
+ <head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>NoteCraft</title>
+   <link rel="stylesheet" href="styles.css">
+ </head>
+ <body>
+   <div class="container">
+     <div class="sidebar">
+       <h3>Pages</h3>
+       <button id="newPageBtn">New Page</button>
+       <ul id="pagesList"></ul>
+     </div>
+     <div class="main-content">
+       <h1 id="pageTitle">Welcome to NoteCraft</h1>
+       <div id="pageContent" class="content"></div>
+       <button id="addBlockBtn">Add Block</button>
+     </div>
+   </div>
+ 
+   <!-- Modal for New Page -->
+   <div id="newPageModal" class="modal">
+     <div class="modal-content">
+       <h2>Create New Page</h2>
+       <input type="text" id="newPageName" placeholder="Enter page name">
+       <button id="createPageBtn">Create Page</button>
+       <button id="closePageModalBtn">Cancel</button>
+     </div>
+   </div>
+ 
+   <!-- Modal for Adding Blocks -->
+   <div id="addBlockModal" class="modal">
+     <div class="modal-content">
+       <h2>Add a New Block</h2>
+       <select id="blockType">
+         <option value="text">Text</option>
+         <option value="checkbox">Checkbox</option>
+         <option value="heading">Heading</option>
+       </select>
+       <input type="text" id="blockContent" placeholder="Enter content">
+       <button id="addBlockToPageBtn">Add Block</button>
+       <button id="closeBlockModalBtn">Cancel</button>
+     </div>
+   </div>
+ 
+   <script src="app.js"></script>
+ </body>
+ </html>
+ 
