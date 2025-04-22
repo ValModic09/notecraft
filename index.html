@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoteCraft</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NoteCraft</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="app">
-        <div class="sidebar">
-            <h2>Pages</h2>
-            <ul id="pagesList"></ul>
-            <button id="newPageBtn">New Page</button>
-        </div>
-        <div class="content">
-            <h1 id="pageTitle">Welcome to NoteCraft</h1>
-            <div id="pageContent"></div>
-        </div>
+  <div class="container">
+    <div class="sidebar">
+      <h3>Pages</h3>
+      <button id="newPageBtn">New Page</button>
+      <ul id="pagesList"></ul>
     </div>
-    <script src="app.js"></script>
+    <div class="main-content">
+      <h1 id="pageTitle">Welcome to NoteCraft</h1>
+      <div id="pageContent" class="content"></div>
+      <button id="addBlockBtn">Add Block</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
+
 
