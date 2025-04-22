@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoteCraft - MVP</title>
+    <title>NoteCraft</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>NoteCraft</h1>
+    <div class="app">
+        <div class="sidebar">
+            <h2>Pages</h2>
+            <ul id="pagesList"></ul>
             <button id="newPageBtn">New Page</button>
-        </header>
-
-        <main id="content">
-            <!-- Pages will be displayed here -->
-        </main>
+        </div>
+        <div class="content">
+            <h1 id="pageTitle">Welcome to NoteCraft</h1>
+            <div id="pageContent"></div>
+        </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
+
